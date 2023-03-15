@@ -8,8 +8,8 @@ const Login = () =>{
 
     const submitHandler = async (e) =>{
         e.preventDefault();
-        enteredEmail = emailRef.current.value;
-        enteredPassword = passwRef.current.value;
+        const enteredEmail = emailRef.current.value;
+        const enteredPassword = passwRef.current.value;
          
         const user={
             email:enteredEmail,

@@ -6,23 +6,29 @@ const SignUp = () =>{
     const passwRef=useRef();
     const cpasswRef=useRef();
 
-    const submitHandler = (e) =>{
+    const submitHandler = async (e) =>{
         e.preventDefault();
-        enteredEmail = emailRef.current.value;
-        enteredPassword = passwRef.current.value;
-        enteredConfirmPassword = cpasswRef.current.value;
+        const enteredEmail = emailRef.current.value;
+        const enteredPassword = passwRef.current.value;
+        const enteredConfirmPassword = cpasswRef.current.value;
         const user={
             email:enteredEmail,
             password:enteredPassword,
             returnSecureToken:true
         }
-        const res = fetch("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCjXxAz_5ptEoFTSrfIS3gbmCPMdHiehAs",{
+        const response= await fetch("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCjXxAz_5ptEoFTSrfIS3gbmCPMdHiehAs",{
 
             method:'POST',
             body:JSON.stringify(user)
-        })
-        const data = res.json();
+        });
+        if(response.ok)
+        {
+            const data = await response.json();
         const idToken=data.idToken;
+        localStorage.setItem('userCurr',idToken);
+        }else{
+            console.log("error")
+        }
     }
     return(<div>    
         <form onSubmit={submitHandler}>
