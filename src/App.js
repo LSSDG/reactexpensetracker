@@ -3,6 +3,7 @@ import './App.css';
 import SignUp from './components/pages/SignUp';
 import Home from './components/pages/Home';
 import Login from './components/pages/Login';
+import Profile from './components/pages/Profile'
 import React from 'react';
 import { BrowserRouter,Routes,Route, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/signup' element={<SignUp/>}/>
+        <Route path='/profile' element={<Profile/>}/>
       </Routes>
     </div>     
      

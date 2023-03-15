@@ -5,7 +5,7 @@ const Home = () => {
         
         <header>
         <h2>Welcome to the ExpenseTracker App</h2>
-        <Link to='/userdetails'>Complete your profile now</Link>
+        <Link to='/profile'>Complete your profile now</Link>
         </header>
     </div>)
 }
