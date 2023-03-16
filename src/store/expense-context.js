@@ -10,7 +10,11 @@ const initialState ={
 const expenseReducer=(state,action)=>{
     if(action.type==="ADD"){
         const updatedItems=state.items.concat(action.item);
+        return{
+            items:updatedItems
+        }
     }
+    
 }
 export const ExpenseContextProvider = (props)=>{
     const [expenseState,dispatchAction] = useReducer(expenseReducer,initialState);

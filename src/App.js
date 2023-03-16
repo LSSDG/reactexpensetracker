@@ -7,7 +7,7 @@ import Profile from './components/pages/Profile'
 import React from 'react';
 import { BrowserRouter,Routes,Route, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import {ExpenseContextProvider} from '../../store/expense-context'
+import {ExpenseContextProvider} from './store/expense-context'
 
 function App() {
   const [token,setToken] = useState('');

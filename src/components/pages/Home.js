@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import ExpenseContext from '../../store/expense-context'
 import {useContext,useRef} from 'react';
+import ExpenseItem from '../Expenses/ExpenseItem'
 
 const Home = () => {
     const expenseCtx=useContext(ExpenseContext);
@@ -11,7 +12,8 @@ const Home = () => {
     const logout = ()=>{
         localStorage.setItem("userCurr",'');
     };
-    const submitHandler = (e) =>{
+    const submitHandler = async (e) =>{
+        e.preventDefault();
         const enteredAmount=amountRef.current.value;
         const enteredDesc=descRef.current.value;
         const enteredCat=catRef.current.value;
@@ -20,7 +22,13 @@ const Home = () => {
             desc:enteredDesc,
             category:enteredCat
         }
-        expenseCtx.addItem(item);
+        const res = await fetch( '',
+        {method:'POST',
+        body:JSON.stringify(item),
+        headers:{'Content-Type':'application/json' }
+        });
+        const data = res.json();
+        console.log(data); 
         console.log(item);
     }
 
@@ -41,9 +49,9 @@ const Home = () => {
             console.log("error");
         }
     }
-    const expenseItems=expenseCtx.items.map((item)=>{
-        return <li key={Math.random()}>{item.amount}</li>
-    })
+    const expenseItems=<ul>{expenseCtx.items.map((item)=>{
+        return <ExpenseItem key={Math.random()} amount={item.amount} desc={item.desc} cat={item.cat}/>
+    })}</ul>
     return(<div>
         
         <header>
@@ -58,7 +66,7 @@ const Home = () => {
             <label>Expense amount</label>
             <input type="number" ref={amountRef}/>
             <label>Expense Description</label>
-            <input type="text"/>
+            <input type="text" ref={descRef}/>
             <select ref={catRef}>
                 <option>Food</option>
                 <option>Salary</option>
@@ -67,7 +75,7 @@ const Home = () => {
             </select>
             <button type="submit">Add expense</button>
         </form>
-        {}
+        {expenseItems}
     </div>)
 }
 
