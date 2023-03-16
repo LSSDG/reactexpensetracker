@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom"
 
 const Home = () => {
+    const logout = ()=>{
+        localStorage.setItem("userCurr",'');
+    }
 
     const verifyEmail = async () =>{
         const id = localStorage.getItem("userCurr");
-        const res = await fetch('',{
+        const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCjXxAz_5ptEoFTSrfIS3gbmCPMdHiehAs',{
             method:'POST',
             body:JSON.stringify({
                 requestType:'VERIFY_EMAIL',
@@ -27,6 +30,7 @@ const Home = () => {
         </header>
 
         <button onClick={verifyEmail}>Verify your email</button>
+        <button onClick={logout}>Logout</button>
     </div>)
 }
 
