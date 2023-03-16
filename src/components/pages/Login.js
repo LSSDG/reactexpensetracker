@@ -39,6 +39,7 @@ const Login = () =>{
             
             <button type="submit">Login</button>
         </form>
+        <button>Forgot password?</button>
 
     </div>)
 }
