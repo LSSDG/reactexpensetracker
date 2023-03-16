@@ -7,6 +7,7 @@ import Profile from './components/pages/Profile'
 import React from 'react';
 import { BrowserRouter,Routes,Route, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import {ExpenseContextProvider} from '../../store/expense-context'
 
 function App() {
   const [token,setToken] = useState('');
@@ -23,11 +24,13 @@ function App() {
   },[login])
   return (
     <div className='App'>
+      <ExpenseContextProvider>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/signup' element={<SignUp/>}/>
         <Route path='/profile' element={<Profile/>}/>
       </Routes>
+      </ExpenseContextProvider>
     </div>     
      
   );
