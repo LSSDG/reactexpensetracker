@@ -1,6 +1,12 @@
 
 
 const ExpenseItem=(props)=>{
+    const editExpense=()=>{
+        fetch('',{
+            method:'PUT',
+            
+        })
+    }
     return(<div>
         <li>
             <div>
@@ -10,6 +16,8 @@ const ExpenseItem=(props)=>{
                 <span>{props.desc}</span>
                 <span>{props.cat}</span>
             </div>
+            <button onClick={editExpense}>Edit</button>
+            <button>Delete</button>
         </li>
     </div>)
 }

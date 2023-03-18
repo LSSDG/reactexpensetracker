@@ -1,9 +1,35 @@
 import { Link } from "react-router-dom";
 import ExpenseContext from '../../store/expense-context'
-import {useContext,useRef} from 'react';
+import {useContext,useRef,useEffect,useState} from 'react';
 import ExpenseItem from '../Expenses/ExpenseItem'
 
 const Home = () => {
+    const [items,setItems] =  useState([]);
+    useEffect(()=>{
+
+        async function fetchData(){
+            const res = await fetch( 'https://reactexpensetracker-1a159-default-rtdb.firebaseio.com/items.json',
+        {method:'GET',
+        
+        headers:{'Content-Type':'application/json' }
+        });
+        if(res.ok){const data =await res.json();
+        const loadedItems=[];
+        for(const key in data){
+            loadedItems.push({
+                id:key,
+                amount:data[key].amount,
+                desc:data[key].desc,
+                cat:data[key].cat
+            });
+            setItems(loadedItems);
+            
+        }
+        console.log(data);} else{
+            console.log("error")
+        }}
+        fetchData();
+    },[])
     const expenseCtx=useContext(ExpenseContext);
     const amountRef = useRef();
     const descRef = useRef();
@@ -22,7 +48,7 @@ const Home = () => {
             desc:enteredDesc,
             category:enteredCat
         }
-        const res = await fetch( '',
+        const res = await fetch( 'https://reactexpensetracker-1a159-default-rtdb.firebaseio.com/items.json',
         {method:'POST',
         body:JSON.stringify(item),
         headers:{'Content-Type':'application/json' }
@@ -49,8 +75,8 @@ const Home = () => {
             console.log("error");
         }
     }
-    const expenseItems=<ul>{expenseCtx.items.map((item)=>{
-        return <ExpenseItem key={Math.random()} amount={item.amount} desc={item.desc} cat={item.cat}/>
+    const expenseItems=<ul>{items.map((item)=>{
+        return <ExpenseItem key={item.id} amount={item.amount} desc={item.desc} cat={item.cat}/>
     })}</ul>
     return(<div>
         
