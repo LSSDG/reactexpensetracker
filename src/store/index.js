@@ -50,11 +50,24 @@ const authSlice = createSlice({
         },
     }
 })
+const initialThemeState={theme:false}
+const themeReducer = createSlice({
+    name:'theme',
+    initialState:initialThemeState,
+    reducers:{
+        light(state){
+            state.theme=false
+        },
+        dark(state){
+            state.theme=true
+        }
+    }
+})
 
 const store = configureStore({
-    reducer:{expense:expenseSlice.reducer,auth:authSlice.reducer}
+    reducer:{expense:expenseSlice.reducer,auth:authSlice.reducer,theme:themeReducer.reducer}
 });
 export const expenseActions =expenseSlice.actions;
 export const authactions=authSlice.actions;
-
+export const themeactions=themeReducer.actions;
 export default store;

@@ -3,7 +3,7 @@ import ExpenseContext from '../../store/expense-context'
 import {useContext,useRef,useEffect,useState} from 'react';
 import ExpenseItem from '../Expenses/ExpenseItem';
 import { useDispatch,useSelector } from "react-redux";
-import { authactions, expenseActions } from "../../store";
+import { authactions, expenseActions ,themeactions} from "../../store";
 import store from "../../store";
 import { Navigate ,useNavigate} from "react-router-dom";
 //import 'bootstrap/dist/css/bootstrap.css';
@@ -16,11 +16,14 @@ const Home = () => {
     const userEmail=useSelector((state)=>state.auth.email)
     const totalExpense=useSelector((state)=>state.expense.totalExpense)
     const overload=useSelector((state)=>state.expense.overload);
+    const theme=useSelector((state)=>state.theme.theme);
+
     console.log("this:"+userEmail)
     const cuserEmail=userEmail.replace(/[^a-zA-Z0-9]/g,'');
     const [adding,setAdding] =  useState({});
     const [items,setItems] =  useState([]);
-    const [editing,setEditing]=useState(false)
+    const [editing,setEditing]=useState(false);
+    const [premium,setPremium]=useState(false);
 
     useEffect(()=>{
         const userToken=localStorage.getItem("userCurr");
@@ -150,18 +153,23 @@ const Home = () => {
         {return <ExpenseItem edit={editHandler} key={item.id} id={item.id} amount={item.amount} desc={item.desc} cat={item.cat}/>}
     })}</ul>
 
+    const addPremium = ()=>{
+        setPremium(true);
+        dispatch(themeactions.dark());
+    }
+
     //JSX RETURN
-    return(<div>
+    return(<div className={theme?"bg-dark text-light":"bg-light text-dark"}>
         
         <header>
-        <h2>Welcome to the ExpenseTracker App{totalExpense}</h2>
+        <h2>Welcome to the ExpenseTracker App</h2>
         <Link to='/profile'>Complete your profile now</Link>
         </header>
 
         <div className="bg-dark justify-content-between align-items-center"><button onClick={verifyEmail} className="btn btn-info m-2">Verify your email</button>
         <button onClick={logout} className="btn btn-danger m-2">Logout</button></div>
         <h2>ADD A EXPENSE</h2>
-        {overload?<button className="btn btn-success">Get Premium</button>:<></>}
+        {overload?<button className="btn btn-success" onClick={addPremium}>Get Premium</button>:<></>}
         <form onSubmit={submitHandler} className="container">
             <div className="form-group mb-3">
                 <label>Expense amount</label>
@@ -177,6 +185,7 @@ const Home = () => {
             <button type="submit" className="btn btn-primary mb-3">Add expense</button>
         </form>
         {expenseItems}
+        <h4>Total ExpenseAmount:{totalExpense}</h4>
     </div>)
 }
 
