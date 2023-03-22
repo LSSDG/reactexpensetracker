@@ -1,6 +1,8 @@
 import { useRef } from "react";
-
+import { Link ,useNavigate} from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.css'
 const SignUp = () =>{
+    const navigate = useNavigate();
 
     const emailRef=useRef();
     const passwRef=useRef();
@@ -25,27 +27,34 @@ const SignUp = () =>{
         {
             const data = await response.json();
         const idToken=data.idToken;
-        localStorage.setItem('userCurr',idToken);
+        //localStorage.setItem('userCurr',idToken);
+        const email=data.email;
+            const cemail=email.replace(/[^a-zA-Z0-9]/g,'');
+            localStorage.setItem("userCurr",idToken);
+            localStorage.setItem("email",cemail);
+        navigate('/');
+
         }else{
             console.log("error")
         }
     }
-    return(<div>    
+    return(<div className="container bg-light">    
         <form onSubmit={submitHandler}>
-            <div>
+            <div className="form-group">
                 <label htmlFor="email">Email</label>
-                <input type="email" id="email" placeholder="Enter email" required ref={emailRef}/>
+                <input className="form-control" type="email" id="email" placeholder="Enter email" required ref={emailRef}/>
             </div>
-            <div>
+            <div className="form-group">
                 <label htmlFor="p">Password</label>
-                <input type="password" id="p" placeholder="Enter password" required ref={passwRef} />
+                <input className="form-control" type="password" id="p" placeholder="Enter password" required ref={passwRef} />
             </div>
-            <div>
+            <div className="form-group mb-3">
                 <label htmlFor="cp">Confirm Password</label>
-                <input type="password" id="cp" placeholder="Confirm password" required ref={cpasswRef} />
+                <input className="form-control" type="password" id="cp" placeholder="Confirm password" required ref={cpasswRef} />
             </div>
-            <button type="submit">Sign Up</button>
+            <button type="submit" className="btn btn-primary">Sign Up</button>
         </form>
+        <Link to='/login'>Login</Link>
     </div>)
 }
 

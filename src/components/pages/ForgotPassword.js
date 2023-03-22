@@ -22,7 +22,7 @@ const ForgotPassword=()=>{
         }
     }
     return(<div>
-        <form onSubmit={submitHanlder}>
+        <form onSubmit={submitHandler}>
             <label htmlFor="forgotemail">Enter your email</label>
             <input type="email" id="forgotemail" ref={emailRef}></input>
             <button type="submit">Reset Password</button>

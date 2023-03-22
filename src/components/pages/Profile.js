@@ -6,8 +6,8 @@ const Profile = () =>{
     const urlRef=useRef();
     const [name,setName]=useState();
     const [url,setUrl]=useState();
-    useEffect(async ()=>{
-        const id=localStorage.getItem("userCurr");
+    useEffect(()=>{
+        async function fetchData(){const id=localStorage.getItem("userCurr");
         const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCjXxAz_5ptEoFTSrfIS3gbmCPMdHiehAs',{
             method:'POST',
             body:JSON.stringify({
@@ -24,7 +24,7 @@ const Profile = () =>{
 
         }else{
             console.log("error");
-        }
+        }}
     },[]);
     const submitHandler=async (e)=>{
         e.preventDefault();
