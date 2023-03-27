@@ -158,6 +158,15 @@ const Home = () => {
         dispatch(themeactions.dark());
     }
 
+    const download = () => {
+        const data=itemsr.map((item)=>{
+            return item.amount+item.desc+item.cat
+        });
+        console.log(data)
+        const link=document.getElementById("download");
+        const blob=new Blob();
+    }
+
     //JSX RETURN
     return(<div className={theme?"bg-dark text-light":"bg-light text-dark"}>
         
@@ -186,6 +195,7 @@ const Home = () => {
         </form>
         {expenseItems}
         <h4>Total ExpenseAmount:{totalExpense}</h4>
+        <Link id="download" onClick={download} download="file.csv">Download Expenses as File</Link>
     </div>)
 }
 
